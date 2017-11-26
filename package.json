@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "jquery": "^3.2.1",
+    "jquery": "^2.2.4",
     "promise-polyfill": "6.1.0",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
