@@ -1,0 +1,21 @@
+__pycache__
+*.pyc
+.idea
+/build
+/dist
+/node_modules
+/log
+/static
+/env
+db.sqlite3
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+/reports

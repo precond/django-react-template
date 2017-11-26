@@ -1,0 +1,53 @@
+{
+  "name": "template",
+  "version": "0.0.1",
+  "author": "Juhana Räsänen <juhana.rasanen@precond.com>",
+  "homepage": "https://github.com/precond/template",
+  "bugs": {
+    "url": "https://github.com/precond/template/issues"
+  },
+  "description": "template",
+  "main": "Gruntfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/precond/template.git"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
+    "promise-polyfill": "6.1.0",
+    "react": "^16.1.0",
+    "react-dom": "^16.1.0",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "whatwg-fetch": "^2.0.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.7",
+    "eslint": "^4.11.0",
+    "eslint-plugin-react": "^7.5.1",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.5",
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-cssmin": "^2.2.1",
+    "grunt-contrib-uglify": "^3.1.0",
+    "grunt-env": "^0.4.4",
+    "grunt-eslint": "^20.1.0",
+    "grunt-exec": "^3.0.0",
+    "grunt-webpack": "^3.0.2",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
+    "webpack": "^3.8.1"
+  },
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

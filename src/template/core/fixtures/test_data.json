@@ -1,0 +1,26 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "one.user@test.com",
+      "email": "one.user@test.com",
+      "password": "",
+      "first_name": "One",
+      "last_name": "User",
+      "is_active": 1
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "second.user@test.com",
+      "email": "second.user@test.com",
+      "password": "",
+      "first_name": "Second",
+      "last_name": "User",
+      "is_active": 1
+    }
+  }
+]

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+
+{% block script %}
+    <script type="application/javascript"}>
+        {% autoescape off %}window.__INITIAL_STATE__ = {{ state }};{% endautoescape %}
+    </script>
+    <script type="application/javascript" src="{% static 'js/app.bundle.js' %}"></script>
+{% endblock %}
