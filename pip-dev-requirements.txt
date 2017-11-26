@@ -1,5 +1,7 @@
+awscli
 coverage
 django-jenkins
 flake8
 flake8_junit_report
-awscli
+gunicorn
+pep8
