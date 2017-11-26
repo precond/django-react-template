@@ -20,13 +20,13 @@ class TestBase(TestCase):
         self.user2.set_password('2pass')
         self.user2.save()
 
-    def login_user(self, client=None, username='one.user@test.com', password='1pass', expected_template='app.html'):
-        if not client:
-            client = Client()
-        response = client.post('/login/?next=/', {'username': username, 'password': password}, follow=True)
+    def login_user(self, c=None, username='one.user@test.com', password='1pass', expected_template='app.html'):
+        if not c:
+            c = Client()
+        response = c.post('/login/?next=/', {'username': username, 'password': password}, follow=True)
         self.assertTemplateUsed(response, expected_template)
-        client.user = User.objects.get(username=username)
-        return client
+        c.user = User.objects.get(username=username)
+        return c
 
     def load_page(self, client, url, expected_template=None, expected_code=200, expected_exception=None, contains=None, not_contains=None):
         if expected_exception:
@@ -95,3 +95,42 @@ class CoreTests(TestBase):
         c = self.login_user()
         c.logout()
         self.load_page(c, '/', expected_template='registration/login.html')
+
+    def test_change_password(self):
+        c = self.login_user()
+        self.api_post(c, '/me/password/', dict(
+            password_current='1pass',
+            password_new='iudvb238sa!',
+            password_again='iudvb238sa!'
+        ), expected_code=204)
+        self.login_user(password='iudvb238sa!')  # Make sure the new password works
+
+    def test_change_password_wrong_current(self):
+        c = self.login_user()
+        response = self.api_post(c, '/me/password/', dict(
+            password_current='notright',
+            password_new='iudvb238sa!',
+            password_again='iudvb238sa!'
+        ), expected_code=403)
+        self.assertEqual(response['message'], "Current password does not match")
+        self.login_user(password='iudvb238sa!', expected_template='registration/login.html')
+
+    def test_change_password_new_mismatch(self):
+        c = self.login_user()
+        response = self.api_post(c, '/me/password/', dict(
+            password_current='1pass',
+            password_new='iudvb238sa!',
+            password_again='notright'
+        ), expected_code=403)
+        self.assertEqual(response['message'], "New passwords do not match")
+        self.login_user(password='iudvb238sa!', expected_template='registration/login.html')
+
+    def test_change_password_new_invalid(self):
+        c = self.login_user()
+        response = self.api_post(c, '/me/password/', dict(
+            password_current='1pass',
+            password_new='aaa',
+            password_again='aaa'
+        ), expected_code=403)
+        self.assertTrue("This password is too short" in response['message'])
+        self.login_user(password='aaa', expected_template='registration/login.html')

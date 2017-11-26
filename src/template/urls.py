@@ -23,4 +23,5 @@ urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
 
     url(r'^$', core_views.app_page, name='app_page'),
+    url(r'^me/password/$', core_views.change_password, name='change_password'),
 ]
