@@ -88,12 +88,10 @@ export default class DjangoRESTComponent extends React.Component {
     get(url) {
         return DjangoRESTComponent._call_fetch(url, {
             method: 'GET',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            credentials: 'same-origin'
         });
     }
+
 
     /**
      * POSTs the given object to the given URL as JSON and handles the response. Returns a
