@@ -107,5 +107,5 @@ Plenty of things, because this project is mostly about documenting the ongoing p
 of learning by doing. Few TODO items in particular:
 
 * Javascript test framework
-* A sample of `fetch` usage, eg. password changing possibility in the UI
+* ~~A sample of `fetch` usage, eg. password changing possibility in the UI~~
 * ~~A sample REST API, potentially a generic REST view class for Django~~
