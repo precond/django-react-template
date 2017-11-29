@@ -30,14 +30,14 @@ def app_page(request):
 @renderer_classes((JSONRenderer,))
 def change_password(request):
     if not check_password(request.data['password_current'], request.user.password):
-        return Response({'message': 'Current password does not match'}, status=403)
+        return Response({'detail': 'Current password does not match'}, status=403)
     if request.data['password_new'] != request.data['password_again']:
-        return Response({'message': 'New passwords do not match'}, status=403)
+        return Response({'detail': 'New passwords do not match'}, status=403)
 
     try:
         validate_password(request.data['password_new'], request.user)
     except ValidationError as e:
-        return Response({'message': '%s' % e}, status=403)
+        return Response({'detail': '%s' % e}, status=403)
 
     request.user.set_password(request.data['password_new'])
     request.user.save()

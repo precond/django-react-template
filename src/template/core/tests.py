@@ -112,7 +112,7 @@ class CoreTests(TestBase):
             password_new='iudvb238sa!',
             password_again='iudvb238sa!'
         ), expected_code=403)
-        self.assertEqual(response['message'], "Current password does not match")
+        self.assertEqual(response['detail'], "Current password does not match")
         self.login_user(password='iudvb238sa!', expected_template='registration/login.html')
 
     def test_change_password_new_mismatch(self):
@@ -122,7 +122,7 @@ class CoreTests(TestBase):
             password_new='iudvb238sa!',
             password_again='notright'
         ), expected_code=403)
-        self.assertEqual(response['message'], "New passwords do not match")
+        self.assertEqual(response['detail'], "New passwords do not match")
         self.login_user(password='iudvb238sa!', expected_template='registration/login.html')
 
     def test_change_password_new_invalid(self):
@@ -132,5 +132,5 @@ class CoreTests(TestBase):
             password_new='aaa',
             password_again='aaa'
         ), expected_code=403)
-        self.assertTrue("This password is too short" in response['message'])
+        self.assertTrue("This password is too short" in response['detail'])
         self.login_user(password='aaa', expected_template='registration/login.html')
