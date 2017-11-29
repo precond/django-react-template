@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.shortcuts import render
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from rest_framework.decorators import api_view, parser_classes, renderer_classes
 from rest_framework.parsers import JSONParser
@@ -17,6 +18,7 @@ from template.core.serializers import CoreUserSerializer
 
 
 @login_required
+@ensure_csrf_cookie
 def app_page(request):
     state = dict(
         user=CoreUserSerializer(instance=request.user).data
