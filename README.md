@@ -108,4 +108,4 @@ of learning by doing. Few TODO items in particular:
 
 * Javascript test framework
 * A sample of `fetch` usage, eg. password changing possibility in the UI
-* A sample REST API, potentially a generic REST view class for Django
+* ~~A sample REST API, potentially a generic REST view class for Django~~
