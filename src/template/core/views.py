@@ -43,4 +43,4 @@ def change_password(request):
     request.user.set_password(request.data['password_new'])
     request.user.save()
     update_session_auth_hash(request, User.objects.get(id=request.user.id))
-    return Response({}, status=204)
+    return Response(None, status=204)
