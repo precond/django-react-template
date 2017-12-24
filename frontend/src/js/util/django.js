@@ -1,19 +1,50 @@
-import React from 'react';
-
 import 'whatwg-fetch';
 
 
 /**
- * A component for handling REST calls to a Django backend implemented with the
+ * A utility class for handling REST calls to a Django backend implemented with the
  * Django REST framework. Handles the CSRF token forwarding as well as response
  * status checking. Uses window.fetch() to make the AJAX calls.
  */
-export default class DjangoRESTComponent extends React.Component {
-    constructor(props) {
-        super(props);
+export default class DjangoAPI {
+    /**
+     * GETs the resource from the given URL and handles the response. Returns a promise
+     * which resolves to {status: <status>, statusText: <text>, data: <data>} object
+     * if the request was successful.
+     */
+    static get(url) {
+        return DjangoAPI._call_fetch(url, {
+            method: 'GET',
+            credentials: 'same-origin'
+        });
+    }
 
-        // Bind the input change handler to make it easy to use in the JSX components
-        this.inputChange = this.inputChange.bind(this);
+
+    /**
+     * POSTs the given object to the given URL as JSON and handles the response. Returns a
+     * promise which resolves to {status: <status>, statusText: <text>, data: <data>} object
+     * if the request was successful.
+     */
+    static post(url, data, method='POST') {
+        return DjangoAPI._call_fetch(url, {
+            method: method,
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': DjangoAPI.getCSRFCookie()
+            },
+            body: JSON.stringify(data)
+        });
+    }
+
+
+    /**
+     * PUTs the given object to the given URL as JSON and handles the response. Returns a
+     * promise which resolves to {status: <status>, statusText: <text>, data: <data>} object
+     * if the request was successful.
+     */
+    static put(url, data) {
+        return this.post(url, data, 'PUT');
     }
 
 
@@ -75,61 +106,7 @@ export default class DjangoRESTComponent extends React.Component {
 
     static _call_fetch(url, options) {
         return fetch(url, options)
-            .then(DjangoRESTComponent.parseResponse)
-            .then(DjangoRESTComponent.checkStatus);
-    }
-
-
-    /**
-     * GETs the resource from the given URL and handles the response. Returns a promise
-     * which resolves to {status: <status>, statusText: <text>, data: <data>} object
-     * if the request was successful.
-     */
-    get(url) {
-        return DjangoRESTComponent._call_fetch(url, {
-            method: 'GET',
-            credentials: 'same-origin'
-        });
-    }
-
-
-    /**
-     * POSTs the given object to the given URL as JSON and handles the response. Returns a
-     * promise which resolves to {status: <status>, statusText: <text>, data: <data>} object
-     * if the request was successful.
-     */
-    post(url, data, method='POST') {
-        return DjangoRESTComponent._call_fetch(url, {
-            method: method,
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': DjangoRESTComponent.getCSRFCookie()
-            },
-            body: JSON.stringify(data)
-        });
-    }
-
-
-    /**
-     * PUTs the given object to the given URL as JSON and handles the response. Returns a
-     * promise which resolves to {status: <status>, statusText: <text>, data: <data>} object
-     * if the request was successful.
-     */
-    put(url, data) {
-        return this.post(url, data, 'PUT');
-    }
-
-
-    /**
-     * Handler function for updating the HTML input values in a controlled component form.
-     * Stores the input value into the local state with the same name as HTML input "name"
-     * attribute.
-     */
-    inputChange(e) {
-        const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-        this.setState({
-            [e.target.name]: value
-        });
+            .then(DjangoAPI.parseResponse)
+            .then(DjangoAPI.checkStatus);
     }
 }

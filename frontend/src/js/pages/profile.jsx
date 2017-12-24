@@ -1,19 +1,19 @@
 import React from 'react';
 
-import DjangoRESTComponent from '../util/django';
+import {InputField, InputPage} from '../components/inputs';
+import Page from '../structure/page';
+import DjangoAPI from '../util/django';
+import {Button} from '../components/button';
 
 
 const PasswordField = function(props) {
     return(
-        <div className="form-group col-md-3">
-            <label className="control-label">{props.text}</label>
-            <input name={props.name} className="form-control" type="password" onChange={props.handler}/>
-        </div>
+        <InputField size={3} type="password" name={props.name} label={props.label} onChange={props.onChange}/>
     );
 };
 
 
-export default class Profile extends DjangoRESTComponent {
+export default class Profile extends InputPage {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,7 +28,7 @@ export default class Profile extends DjangoRESTComponent {
     changePassword(e) {
         const self = this;
         e.preventDefault();
-        self.post('/me/password/', {
+        DjangoAPI.post('/me/password/', {
             password_current: this.state.currentPassword,
             password_new: this.state.newPassword,
             password_again: this.state.newPasswordAgain
@@ -55,18 +55,15 @@ export default class Profile extends DjangoRESTComponent {
 
     render() {
         return (
-            <div>
+            <Page>
                 <h2>User profile</h2>
                 <h3>Change password</h3>
                 <form>
                     <div className="row">
-                        <PasswordField name="currentPassword" text="Current password" handler={this.inputChange}/>
-                        <PasswordField name="newPassword" text="New password" handler={this.inputChange}/>
-                        <PasswordField name="newPasswordAgain" text="New password, again" handler={this.inputChange}/>
-                        <div className="form-group col-md-1">
-                            <label className="control-label">&nbsp;</label>
-                            <button className="btn btn-default" onClick={this.changePassword}>Change</button>
-                        </div>
+                        <PasswordField name="currentPassword" label="Current password" onChange={this.inputChange}/>
+                        <PasswordField name="newPassword" label="New password" onChange={this.inputChange}/>
+                        <PasswordField name="newPasswordAgain" label="New password, again" onChange={this.inputChange}/>
+                        <div className="form-group"><Button size={1} onClick={this.changePassword}>Change</Button></div>
                     </div>
                 </form>
                 {this.state.message &&
@@ -74,7 +71,7 @@ export default class Profile extends DjangoRESTComponent {
                         <strong>{this.state.message}</strong>
                     </div>
                 }
-            </div>
+            </Page>
         );
     }
 }

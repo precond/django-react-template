@@ -21,7 +21,7 @@ from template.core import views as core_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url('^', include('django.contrib.auth.urls')),
-
-    url(r'^$', core_views.app_page, name='app_page'),
     url(r'^me/password/$', core_views.change_password, name='change_password'),
+
+    url(r'^.*$', core_views.app_page, name='app_page'),
 ]

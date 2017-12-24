@@ -6,34 +6,23 @@ import {Provider} from 'react-redux';
 
 import {BrowserRouter as Router} from 'react-router-dom';
 
-import {coreApp} from './reducers';
-import UserMainPage from './containers/usermainpage';
-
-import Promise from 'promise-polyfill';
+import {coreApp, initialState} from './reducers';
 
 import '../css/app';
 
-
-// Add Promises polyfill if not provided by the browser
-if (!window.Promise) {
-    window.Promise = Promise;
-}
+import Main from './main';
 
 
+// Construct the store with combined initial state and preloaded state from backend
 const preloadedState = window.__INITIAL_STATE__;
 delete window.__INITIAL_STATE__;
-const store = createStore(coreApp, preloadedState);
-
-
-function App() {
-    return (<UserMainPage />);
-}
+const store = createStore(coreApp, Object.assign(initialState, preloadedState));
 
 
 render(
     <Provider store={store}>
         <Router>
-            <App />
+            <Main/>
         </Router>
     </Provider>,
     document.getElementById('app')

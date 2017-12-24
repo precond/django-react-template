@@ -9,6 +9,7 @@ const paths = {
 
 module.exports = {
     entry: [
+        'babel-polyfill',
         'whatwg-fetch',
         path.join(paths.JS, 'app.jsx'),
     ],
@@ -50,8 +51,8 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(woff2?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "file-loader?name=fonts/[name].[ext]"
+                test: /\.(woff2?|ttf|eot|otf|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'file-loader?name=fonts/[name].[ext]'
             },
         ],
     },

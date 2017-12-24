@@ -35,7 +35,7 @@ The template includes the following components and tools.
 * [Redux](https://redux.js.org/)
 * [React-router](https://github.com/ReactTraining/react-router)
 * [Fetch polyfill](https://github.com/github/fetch)
-* [Promise polyfill](https://github.com/taylorhakes/promise-polyfill)
+* [Babel polyfill](https://babeljs.io/docs/usage/polyfill/)
 * Requires ES6 with JSX
 
 ### Tools

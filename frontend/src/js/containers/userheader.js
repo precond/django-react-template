@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
-import MainPage from '../structure/mainpage';
+import Header from '../structure/header';
 
 
 const mapStateToProps = state => {
@@ -11,10 +11,10 @@ const mapStateToProps = state => {
 };
 
 
-const UserMainPage = withRouter(connect(
+const UserHeader = withRouter(connect(
     mapStateToProps,
     null
-)(MainPage));
+)(Header));
 
 
-export default UserMainPage;
+export default UserHeader;
