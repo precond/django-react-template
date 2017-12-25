@@ -8,7 +8,7 @@ import {Button} from '../components/button';
 
 const PasswordField = function(props) {
     return(
-        <InputField size={3} type="password" name={props.name} label={props.label} onChange={props.onChange}/>
+        <InputField size={3} type="password" name={props.name} label={props.label} error={props.error} onChange={props.onChange} onBlur={props.onBlur}/>
     );
 };
 
@@ -18,10 +18,39 @@ export default class Profile extends InputPage {
         super(props);
         this.state = {
             message: null,
-            success: false
+            success: false,
+            currentPassword: null,
+            newPassword: null,
+            newPasswordAgain: null,
+            errors: {}
         };
 
         this.changePassword = this.changePassword.bind(this);
+    }
+
+
+    doValidateField(name, value) {
+        let error = null;
+        switch(name) {
+        case 'currentPassword':
+            if (!value) {
+                error = 'Fill in current password';
+            }
+            break;
+        case 'newPassword':
+            if (!value) {
+                error = 'Fill in new password';
+            } else if (value.length < 7) {
+                error = 'Password is too short';
+            }
+            break;
+        case 'newPasswordAgain':
+            if (value !== this.state.newPassword) {
+                error = 'Passwords do not match';
+            }
+            break;
+        }
+        return error;
     }
 
 
@@ -38,9 +67,9 @@ export default class Profile extends InputPage {
             self.setState({
                 message: 'Password changed!',
                 success: true,
-                password_current: null,
-                password_new: null,
-                password_again: null
+                currentPassword: null,
+                newPassword: null,
+                newPasswordAgain: null
             });
 
         }).catch(function(ex) {
@@ -60,9 +89,9 @@ export default class Profile extends InputPage {
                 <h3>Change password</h3>
                 <form>
                     <div className="row">
-                        <PasswordField name="currentPassword" label="Current password" onChange={this.inputChange}/>
-                        <PasswordField name="newPassword" label="New password" onChange={this.inputChange}/>
-                        <PasswordField name="newPasswordAgain" label="New password, again" onChange={this.inputChange}/>
+                        <PasswordField name="currentPassword" label="Current password" error={this.state.errors.currentPassword} onChange={this.inputChange} onBlur={this.inputBlur}/>
+                        <PasswordField name="newPassword" label="New password" error={this.state.errors.newPassword} onChange={this.inputChange} onBlur={this.inputBlur}/>
+                        <PasswordField name="newPasswordAgain" label="New password, again" error={this.state.errors.newPasswordAgain} onChange={this.inputChange} onBlur={this.inputBlur}/>
                         <div className="form-group"><Button size={1} onClick={this.changePassword}>Change</Button></div>
                     </div>
                 </form>
