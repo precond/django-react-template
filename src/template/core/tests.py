@@ -1,7 +1,7 @@
 import json
 
 from django.contrib.auth.models import User, Permission
-from django.test import TestCase, Client
+from django.test import TestCase
 
 
 class TestBase(TestCase):
@@ -20,20 +20,17 @@ class TestBase(TestCase):
         self.user2.set_password('2pass')
         self.user2.save()
 
-    def login_user(self, c=None, username='one.user@test.com', password='1pass', expected_template='app.html'):
-        if not c:
-            c = Client()
-        response = c.post('/login/?next=/', {'username': username, 'password': password}, follow=True)
+    def login_user(self, username='one.user@test.com', password='1pass', expected_template='app.html'):
+        response = self.client.post('/login/?next=/', {'username': username, 'password': password}, follow=True)
         self.assertTemplateUsed(response, expected_template)
-        c.user = User.objects.get(username=username)
-        return c
+        self.client.user = User.objects.get(username=username)
 
-    def load_page(self, client, url, expected_template=None, expected_code=200, expected_exception=None, contains=None, not_contains=None):
+    def load_page(self, url, expected_template=None, expected_code=200, expected_exception=None, contains=None, not_contains=None):
         if expected_exception:
             with self.assertRaises(expected_exception):
-                client.get(url, follow=True)
+                self.client.get(url, follow=True)
         else:
-            response = client.get(url, follow=True)
+            response = self.client.get(url, follow=True)
             self.assertEqual(response.status_code, expected_code)
             if expected_template:
                 self.assertTemplateUsed(response, expected_template)
@@ -45,26 +42,26 @@ class TestBase(TestCase):
                     self.assertNotContains(response, text)
             return response
 
-    def api_get(self, client, url, expected_code=200):
-        response = client.get(url, follow=True)
+    def api_get(self, url, expected_code=200):
+        response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, expected_code)
         return response.json()
 
-    def api_post(self, client, url, data, expected_code=200, patch=False):
+    def api_post(self, url, data, expected_code=200, patch=False):
         data = data if data else dict()
-        method = client.patch if patch else client.post
+        method = self.client.patch if patch else self.client.post
         response = method(url, json.dumps(data), follow=True, content_type='application/json')
         self.assertEqual(response.status_code, expected_code)
         return response.json() if response.content else None
 
-    def api_put(self, client, url, data, expected_code=204):
+    def api_put(self, url, data, expected_code=204):
         data = data if data else dict()
-        response = client.put(url, json.dumps(data), follow=True, content_type='application/json')
+        response = self.client.put(url, json.dumps(data), follow=True, content_type='application/json')
         self.assertEqual(response.status_code, expected_code)
         return response.json() if response.content else None
 
-    def api_delete(self, client, url, expected_code=204):
-        response = client.delete(url, follow=True)
+    def api_delete(self, url, expected_code=204):
+        response = self.client.delete(url, follow=True)
         self.assertEqual(response.status_code, expected_code)
         return response.json() if response.content else None
 
@@ -81,8 +78,8 @@ class CoreTests(TestBase):
         self.login_user(password='notright', expected_template='registration/login.html')
 
     def test_home_page(self):
-        c = self.login_user()
-        response = self.load_page(c, '/', expected_template='app.html')
+        self.login_user()
+        response = self.load_page('/', expected_template='app.html')
         self.assertTrue('state' in response.context)
         state = json.loads(response.context['state'])
         self.assertEqual(state['user']['id'], self.user1.id)
@@ -92,13 +89,13 @@ class CoreTests(TestBase):
         self.assertFalse(state['user']['is_superuser'])
 
     def test_logout(self):
-        c = self.login_user()
-        c.logout()
-        self.load_page(c, '/', expected_template='registration/login.html')
+        self.login_user()
+        self.client.logout()
+        self.load_page('/', expected_template='registration/login.html')
 
     def test_change_password(self):
-        c = self.login_user()
-        self.api_post(c, '/me/password/', dict(
+        self.login_user()
+        self.api_post('/me/password/', dict(
             password_current='1pass',
             password_new='iudvb238sa!',
             password_again='iudvb238sa!'
@@ -106,8 +103,8 @@ class CoreTests(TestBase):
         self.login_user(password='iudvb238sa!')  # Make sure the new password works
 
     def test_change_password_wrong_current(self):
-        c = self.login_user()
-        response = self.api_post(c, '/me/password/', dict(
+        self.login_user()
+        response = self.api_post('/me/password/', dict(
             password_current='notright',
             password_new='iudvb238sa!',
             password_again='iudvb238sa!'
@@ -116,8 +113,8 @@ class CoreTests(TestBase):
         self.login_user(password='iudvb238sa!', expected_template='registration/login.html')
 
     def test_change_password_new_mismatch(self):
-        c = self.login_user()
-        response = self.api_post(c, '/me/password/', dict(
+        self.login_user()
+        response = self.api_post('/me/password/', dict(
             password_current='1pass',
             password_new='iudvb238sa!',
             password_again='notright'
@@ -126,8 +123,8 @@ class CoreTests(TestBase):
         self.login_user(password='iudvb238sa!', expected_template='registration/login.html')
 
     def test_change_password_new_invalid(self):
-        c = self.login_user()
-        response = self.api_post(c, '/me/password/', dict(
+        self.login_user()
+        response = self.api_post('/me/password/', dict(
             password_current='1pass',
             password_new='aaa',
             password_again='aaa'
