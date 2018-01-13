@@ -26,6 +26,12 @@ export default class Profile extends InputPage {
         };
 
         this.changePassword = this.changePassword.bind(this);
+        this.canChangePassword = this.canChangePassword.bind(this);
+    }
+
+
+    canChangePassword() {
+        return this.state.currentPassword && this.state.newPassword && this.state.newPasswordAgain && !this.hasErrors();
     }
 
 
@@ -87,14 +93,12 @@ export default class Profile extends InputPage {
             <Page>
                 <h2>User profile</h2>
                 <h3>Change password</h3>
-                <form>
-                    <div className="row">
-                        <PasswordField name="currentPassword" label="Current password" error={this.state.errors.currentPassword} onChange={this.inputChange} onBlur={this.inputBlur}/>
-                        <PasswordField name="newPassword" label="New password" error={this.state.errors.newPassword} onChange={this.inputChange} onBlur={this.inputBlur}/>
-                        <PasswordField name="newPasswordAgain" label="New password, again" error={this.state.errors.newPasswordAgain} onChange={this.inputChange} onBlur={this.inputBlur}/>
-                        <div className="form-group"><Button size={1} onClick={this.changePassword}>Change</Button></div>
-                    </div>
-                </form>
+                <div className="row">
+                    <PasswordField name="currentPassword" label="Current password" error={this.state.errors.currentPassword} onChange={this.inputChange} onBlur={this.inputBlur}/>
+                    <PasswordField name="newPassword" label="New password" error={this.state.errors.newPassword} onChange={this.inputChange} onBlur={this.inputBlur}/>
+                    <PasswordField name="newPasswordAgain" label="New password, again" error={this.state.errors.newPasswordAgain} onChange={this.inputChange} onBlur={this.inputBlur}/>
+                    <div className="form-group"><Button size={2} type="primary" disabled={!this.canChangePassword()} onClick={this.changePassword}>Change</Button></div>
+                </div>
                 {this.state.message &&
                     <div className={`alert alert-${this.state.success ? 'success' : 'danger'} col-md-3`}>
                         <strong>{this.state.message}</strong>
