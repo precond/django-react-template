@@ -34,8 +34,8 @@ def change_password(request):
     if 'password_current' not in request.data or not check_password(request.data['password_current'], request.user.password):
         return Response({'detail': 'Current password does not match'}, status=403)
 
-    if 'password_new' not in request.data or 'password_again' not in request.data or request.data['password_new'] != request.data['password_again']:
-        return Response({'detail': 'New passwords do not match'}, status=403)
+    if 'password_new' not in request.data:
+        return Response({'detail': 'New password not given'}, status=403)
 
     try:
         validate_password(request.data['password_new'], request.user)
