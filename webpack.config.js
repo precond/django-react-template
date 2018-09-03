@@ -8,11 +8,7 @@ const paths = {
 };
 
 module.exports = {
-    entry: [
-        'babel-polyfill',
-        'whatwg-fetch',
-        path.join(paths.JS, 'app.jsx'),
-    ],
+    entry: ['@babel/polyfill', path.join(paths.JS, 'app.jsx')],
     output: {
         path: paths.DIST,
         filename: 'js/app.bundle.js',
@@ -28,7 +24,9 @@ module.exports = {
             '$'     : 'jquery',
             'window.$'     : 'jquery'
         }),
-    ],
+        new webpack.ProvidePlugin({
+            'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
+        })    ],
     module: {
         rules: [
             {

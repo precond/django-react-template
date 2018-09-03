@@ -1,6 +1,6 @@
 {
   "presets": [
-    ["env", {
+    ["@babel/preset-env", {
       "targets": {
         "browsers": [
           "Chrome >= 52",
@@ -10,12 +10,12 @@
           "last 4 Edge versions"
         ]
       },
-      "useBuiltIns": true
+      "useBuiltIns": "usage"
     }],
-    "react"
+    "@babel/react"
   ],
 
   "plugins": [
-    "transform-object-rest-spread"
+    "@babel/proposal-object-rest-spread"
   ]
 }

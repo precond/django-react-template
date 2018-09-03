@@ -1,6 +1,3 @@
-import 'whatwg-fetch';
-
-
 /**
  * A utility class for handling REST calls to a Django backend implemented with the
  * Django REST framework. Handles the CSRF token forwarding as well as response

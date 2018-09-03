@@ -13,27 +13,28 @@
     "url": "git://github.com/precond/template.git"
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0",
+    "@babel/polyfill": "^7.0.0",
     "bootstrap": "^3.3.7",
+    "core-js": "^2.5.7",
     "jquery": "^2.2.4",
-    "react": "^16.1.0",
+    "react": "^16.4.2",
     "react-dom": "^16.1.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
-    "whatwg-fetch": "^2.0.3"
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.0",
     "css-loader": "^0.28.7",
     "eslint": "^4.11.0",
     "eslint-plugin-react": "^7.5.1",
+    "exports-loader": "^0.7.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",
     "grunt": "^1.0.1",
@@ -44,9 +45,13 @@
     "grunt-eslint": "^20.1.0",
     "grunt-exec": "^3.0.0",
     "grunt-webpack": "^3.0.2",
+    "imports-loader": "^0.8.0",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "webpack": "^3.8.1"
+  },
+  "peerDependencies": {
+    "core-js": "^2.5.7"
   },
   "scripts": {
     "build": "webpack",
