@@ -2,7 +2,6 @@ import React from 'react';
 
 import {InputField, InputPage} from '../components/inputs';
 import Page from '../structure/page';
-import DjangoAPI from '../util/django';
 import {Button} from '../components/button';
 
 
@@ -60,15 +59,9 @@ export default class Profile extends InputPage {
     }
 
 
-    changePassword(e) {
+    changePassword() {
         const self = this;
-        e.preventDefault();
-        DjangoAPI.post('/me/password/', {
-            password_current: this.state.currentPassword,
-            password_new: this.state.newPassword,
-            password_again: this.state.newPasswordAgain
-
-        }).then(function() {
+        this.props.api.setPassword(this.state.currentPassword, this.state.newPassword).then(function() {
             // On success render the success Bootstrap alert
             self.setState({
                 message: 'Password changed!',
