@@ -13,15 +13,24 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 from configparser import ConfigParser
 
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-CONFIG_DIR = os.path.abspath(os.path.join(ROOT_DIR, 'config'))
+APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(APP_DIR)
+CONFIG_DIR = os.path.abspath(os.path.join(BASE_DIR, 'config'))
 
 environment = os.environ['APPLICATION_ENVIRONMENT'] if 'APPLICATION_ENVIRONMENT' in os.environ else 'development'
 is_production = environment == 'production'
 
 config = ConfigParser()
 config.optionxform = str
+config.read(os.path.join(CONFIG_DIR, 'release.ini'))
 config.read(os.path.join(CONFIG_DIR, '%s.ini' % environment))
+
+# Used for static resources versioning
+RESOURCES = {
+    'css_common_file': config.get('app', 'css_common_file', fallback=None),
+    'app_common_file': config.get('app', 'app_common_file', fallback=None),
+    'app_template_file': config.get('app', 'app_template_file', fallback=None),
+}
 
 
 # Quick-start development settings - unsuitable for production
@@ -137,8 +146,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(ROOT_DIR, 'static')
+STATIC_URL = config.get('app', 'cdn_url', fallback='/static/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 # Logging
@@ -156,7 +165,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'formatter': 'simple',
-            'filename': os.path.join(ROOT_DIR, 'log/application.log'),
+            'filename': os.path.join(BASE_DIR, 'log/application.log'),
         },
     },
     'loggers': {

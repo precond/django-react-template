@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
 
 const paths = {
     DIST: path.resolve(__dirname, 'static'),
@@ -9,17 +8,17 @@ const paths = {
 };
 
 module.exports = {
-    mode: 'production',
+    mode: 'development',
     entry: {
         template: ['@babel/polyfill', path.join(paths.JS, 'app.jsx')],
     },
     output: {
         path: paths.DIST,
-        filename: 'js/app-[name].[contenthash].bundle.js',
-        publicPath: '/static/'
+        filename: 'js/app-[name].bundle.js',
+        publicPath: '/resource/'
     },
     plugins: [
-        new MiniCssExtractPlugin({filename: 'css/common.[contenthash].bundle.css'}),
+        new MiniCssExtractPlugin({filename: 'css/common.bundle.css'}),
         new webpack.ProvidePlugin({
             'jQuery': 'jquery',
             'window.jQuery': 'jquery',
@@ -30,13 +29,7 @@ module.exports = {
         }),
         new webpack.ProvidePlugin({
             'fetch': 'exports-loader?self.fetch!whatwg-fetch/dist/fetch.umd'
-        }),
-        new TerserPlugin({
-            parallel: true,
-            terserOptions: {
-                ecma: 6,
-            },
-        }),
+        })
     ],
     optimization: {
         splitChunks: {

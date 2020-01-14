@@ -16,8 +16,7 @@ import Main from './main';
 
 
 // Construct the store with combined initial state and preloaded state from backend
-const preloadedState = window.__INITIAL_STATE__;
-delete window.__INITIAL_STATE__;
+const preloadedState = JSON.parse(document.getElementById('initial-state').textContent);
 const store = createStore(
     coreApp,
     Object.assign(initialState, preloadedState),
