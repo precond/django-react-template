@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Box, Heading} from 'rebass';
+import {Box} from 'rebass';
 
 import {InputField, InputComponent, InputLabel} from '../components/inputs';
 import Page from '../structure/page';

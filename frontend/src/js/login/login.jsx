@@ -4,7 +4,7 @@ import {Box, Heading} from 'rebass';
 
 import {InputComponent, InputField} from '../components/inputs';
 import {Button} from '../components/button';
-import Page from "../structure/page";
+import Page from '../structure/page';
 
 
 export class Login extends InputComponent {

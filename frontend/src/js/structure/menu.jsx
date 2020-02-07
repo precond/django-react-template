@@ -2,12 +2,12 @@ import React from 'react';
 
 import {Box, Flex, Link as RebassLink} from 'rebass';
 
-import Link from "react-router-dom/Link";
+import Link from 'react-router-dom/Link';
 
 
 function MenuLink (props) {
     return props.to ?
-        <RebassLink variant="nav" as="span"><Link {...props} style={{color: "inherit", textDecoration: "inherit"}}>{props.children}</Link></RebassLink> :
+        <RebassLink variant="nav" as="span"><Link {...props} style={{color: 'inherit', textDecoration: 'inherit'}}>{props.children}</Link></RebassLink> :
         <RebassLink variant="nav" {...props}>{props.children}</RebassLink>;
 }
 

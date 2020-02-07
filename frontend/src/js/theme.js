@@ -28,4 +28,4 @@ export default Object.assign(theme, {
         radio: {},
         checkbox: {},
     },
-})
+});

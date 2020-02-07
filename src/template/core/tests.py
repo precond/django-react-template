@@ -20,9 +20,8 @@ class TestBase(TestCase):
         self.user2.set_password('2pass')
         self.user2.save()
 
-    def login_user(self, username='one.user@test.com', password='1pass', expected_template='app.html'):
-        response = self.client.post('/login/?next=/', {'username': username, 'password': password}, follow=True)
-        self.assertTemplateUsed(response, expected_template)
+    def login_user(self, username='one.user@test.com', password='1pass', expected_code=200):
+        self.api_post('/api/login', {'username': username, 'password': password}, expected_code=expected_code)
         self.client.user = User.objects.get(username=username)
 
     def load_page(self, url, expected_template=None, expected_code=200, expected_exception=None, contains=None, not_contains=None):
@@ -72,16 +71,20 @@ class CoreTests(TestBase):
         super(CoreTests, self).setUp()
 
     def test_login_page(self):
+        response = self.load_page('/', expected_template='app.html')
+        self.assertTrue('initial_state' in response.context)
+        state = response.context['initial_state']
+        self.assertEqual(state['next'], '/')
         self.login_user()
 
     def test_login_fail(self):
-        self.login_user(password='notright', expected_template='registration/login.html')
+        self.login_user(password='notright', expected_code=403)
 
     def test_home_page(self):
         self.login_user()
         response = self.load_page('/', expected_template='app.html')
-        self.assertTrue('state' in response.context)
-        state = json.loads(response.context['state'])
+        self.assertTrue('initial_state' in response.context)
+        state = response.context['initial_state']
         self.assertEqual(state['user']['id'], self.user1.id)
         self.assertEqual(state['user']['first_name'], 'One')
         self.assertEqual(state['user']['last_name'], 'User')
@@ -91,11 +94,14 @@ class CoreTests(TestBase):
     def test_logout(self):
         self.login_user()
         self.client.logout()
-        self.load_page('/', expected_template='registration/login.html')
+        response = self.load_page('/', expected_template='app.html')
+        self.assertTrue('initial_state' in response.context)
+        state = response.context['initial_state']
+        self.assertEqual(state['next'], '/')
 
     def test_change_password(self):
         self.login_user()
-        self.api_post('/me/password/', dict(
+        self.api_post('/api/me/password', dict(
             password_current='1pass',
             password_new='iudvb238sa!',
         ), expected_code=204)
@@ -103,18 +109,18 @@ class CoreTests(TestBase):
 
     def test_change_password_wrong_current(self):
         self.login_user()
-        response = self.api_post('/me/password/', dict(
+        response = self.api_post('/api/me/password', dict(
             password_current='notright',
             password_new='iudvb238sa!',
         ), expected_code=403)
         self.assertEqual(response['detail'], "Current password does not match")
-        self.login_user(password='iudvb238sa!', expected_template='registration/login.html')
+        self.login_user(password='iudvb238sa!', expected_code=403)
 
     def test_change_password_new_invalid(self):
         self.login_user()
-        response = self.api_post('/me/password/', dict(
+        response = self.api_post('/api/me/password', dict(
             password_current='1pass',
             password_new='aaa',
         ), expected_code=403)
         self.assertTrue("This password is too short" in response['detail'])
-        self.login_user(password='aaa', expected_template='registration/login.html')
+        self.login_user(password='aaa', expected_code=403)

@@ -13,7 +13,7 @@ favourite project setup. I did this mainly for saving my own time in starting ne
 by putting together all the new things I have learned in my recent projects, but I'm glad
 if this is of any help to someone else working with the same technologies.
 
-Author: Juhana Räsänen ([juhana.rasanen@prcond.com](mailto:juhana.rasanen@prcond.com))
+Author: Juhana Räsänen ([juhana.rasanen@precond.com](mailto:juhana.rasanen@precond.com))
 
 
 ## Components
@@ -22,15 +22,14 @@ The template includes the following components and tools.
 
 ### Backend
 
-* [Django](https://www.djangoproject.com) latest LTS version (1.11.x)
+* [Django](https://www.djangoproject.com) latest LTS version (2.2.x)
 * [Django REST Framework](http://www.django-rest-framework.org)
 * [PyMySQL Client](https://github.com/PyMySQL/mysqlclient-python)
-* Requires python 3.4+
+* Requires python 3.6+
 
 ### Frontend
 
-* [Bootstrap](http://getbootstrap.com/) 3.3.7+
-* [jQuery](https://jquery.com) 2.2.4 (because of Bootstrap 3.x)
+* [Rebass](https://rebassjs.org/)
 * [React](https://reactjs.org/) 16.x+
 * [Redux](https://redux.js.org/)
 * [React-router](https://github.com/ReactTraining/react-router)

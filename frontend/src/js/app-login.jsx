@@ -11,8 +11,8 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import {loginApp, initialState} from './login/reducers';
 
 import '../css/app';
-import { ThemeProvider } from 'theme-ui'
-import theme from './theme'
+import { ThemeProvider } from 'theme-ui';
+import theme from './theme';
 
 import LoginRoutes from './login/router';
 

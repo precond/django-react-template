@@ -24,7 +24,6 @@ def login(request):
     return Response({}, status=403)
 
 
-
 @login_required
 @api_view(['POST'])
 @parser_classes((JSONParser,))

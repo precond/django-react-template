@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Box, Heading} from "rebass";
+import {Box, Heading} from 'rebass';
 
 import Menu from './menu';
 
