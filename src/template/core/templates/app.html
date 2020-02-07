@@ -1,6 +1,11 @@
-{% extends "base-react.html" %}
+{% extends "base.html" %}
 {% load resource from core %}
 
-{% block app_script %}
-    <script type="application/javascript" src="{% resource 'app_template_file' %}"></script>
+{% block body %}
+    <div id="app"></div>
+
+    {% if initial_state is not None %}{{ initial_state|json_script:"initial-state" }}{% endif %}
+    <script type="application/javascript" src="{% resource 'app_common_file' %}"></script>
+    <script type="application/javascript" src="{% resource app_resource %}"></script>
+    {% block extra_scripts %}{% endblock %}
 {% endblock %}

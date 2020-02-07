@@ -10,7 +10,7 @@ const paths = {
 module.exports = {
     mode: 'development',
     entry: {
-        template: ['@babel/polyfill', path.join(paths.JS, 'app.jsx')],
+        main: ['@babel/polyfill', path.join(paths.JS, 'app-main.jsx')],
     },
     output: {
         path: paths.DIST,

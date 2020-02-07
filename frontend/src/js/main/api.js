@@ -1,4 +1,4 @@
-import DjangoAPI from './util/django';
+import DjangoAPI from '../util/django';
 
 
 export const getAPI = dispatch => {

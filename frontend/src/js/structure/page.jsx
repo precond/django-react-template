@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Content from './content';
-import UserHeader from '../containers/userheader';
+import UserHeader from '../main/userheader';
 
 
 export default function Page(props) {

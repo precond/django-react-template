@@ -9,6 +9,7 @@ from template.core.serializers import CoreUserSerializer
 @ensure_csrf_cookie
 def app_page(request):
     return render(request, 'app.html', dict(
+        app_resource='app_main_file',
         initial_state=dict(
             user=CoreUserSerializer(instance=request.user).data
         )

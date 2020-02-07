@@ -8,11 +8,11 @@ import thunk from 'redux-thunk';
 
 import {BrowserRouter as Router} from 'react-router-dom';
 
-import {coreApp, initialState} from './reducers';
+import {coreApp, initialState} from './main/reducers';
 
 import '../css/app';
 
-import Main from './main';
+import MainRoutes from './main/router';
 
 
 // Construct the store with combined initial state and preloaded state from backend
@@ -27,7 +27,7 @@ const store = createStore(
 render(
     <Provider store={store}>
         <Router>
-            <Main/>
+            <MainRoutes/>
         </Router>
     </Provider>,
     document.getElementById('app')
