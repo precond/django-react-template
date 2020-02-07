@@ -2,12 +2,14 @@ import React from 'react';
 
 import {Link} from 'react-router-dom';
 
+import {Box, Button as RebassButton} from 'rebass';
+
 
 export const Button = function(props) {
     return(
-        <div>
-            {props.link && !props.disabled && <Link to={props.link} onClick={props.onClick}><button disabled={props.disabled}>{props.children}</button></Link>}
-            {(!props.link || props.disabled) && <button onClick={props.onClick} disabled={props.disabled} type={props.type}>{props.children}</button>}
-        </div>
+        <Box>
+            {props.link && !props.disabled && <Link to={props.link} onClick={props.onClick}><RebassButton {...props}>{props.children}</RebassButton></Link>}
+            {(!props.link || props.disabled) && <RebassButton {...props}>{props.children}</RebassButton>}
+        </Box>
     );
 };

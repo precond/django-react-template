@@ -11,6 +11,8 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import {loginApp, initialState} from './login/reducers';
 
 import '../css/app';
+import { ThemeProvider } from 'theme-ui'
+import theme from './theme'
 
 import LoginRoutes from './login/router';
 
@@ -25,10 +27,12 @@ const store = createStore(
 
 
 render(
-    <Provider store={store}>
-        <Router>
-            <LoginRoutes/>
-        </Router>
-    </Provider>,
+    <ThemeProvider theme={theme}>
+        <Provider store={store}>
+            <Router>
+                <LoginRoutes/>
+            </Router>
+        </Provider>
+    </ThemeProvider>,
     document.getElementById('app')
 );

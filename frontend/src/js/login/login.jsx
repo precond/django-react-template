@@ -1,7 +1,10 @@
 import React from 'react';
 
+import {Box, Heading} from 'rebass';
+
 import {InputComponent, InputField} from '../components/inputs';
 import {Button} from '../components/button';
+import Page from "../structure/page";
 
 
 export class Login extends InputComponent {
@@ -22,15 +25,17 @@ export class Login extends InputComponent {
 
     render() {
         return (
-            <div className='content'>
-                <h2>Log in</h2>
-                <InputField name="username" type="text" placeholder="Email address" onChange={this.inputChange} onBlur={this.inputBlur} />
-                <InputField name="password" type="password" placeholder="Password" onChange={this.inputChange} onBlur={this.inputBlur} />
-                {this.state.login_error &&
-                <div className="error">Login failed</div>
-                }
-                <Button onClick={() => this.login()}>Login</Button>
-            </div>
+            <Page>
+                <Box as='form' sx={{mx: 'auto', width: '300px'}} onSubmit={e => e.preventDefault()}>
+                    <Heading sx={{mt: 4, mb: 2}}>Log in</Heading>
+                    <InputField name="username" type="text" placeholder="Email address" onChange={this.inputChange} onBlur={this.inputBlur} />
+                    <InputField name="password" type="password" placeholder="Password" onChange={this.inputChange} onBlur={this.inputBlur} />
+                    {this.state.login_error &&
+                    <Box sx={{color: 'highlight', fontSize: 2}}>Login failed</Box>
+                    }
+                    <Button sx={{mt: 3, width: '100%'}} onClick={() => this.login()}>Login</Button>
+                </Box>
+            </Page>
         );
     }
 }

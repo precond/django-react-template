@@ -1,13 +1,18 @@
 import React from 'react';
 
-import {InputField, InputComponent} from '../components/inputs';
+import {Box, Heading} from 'rebass';
+
+import {InputField, InputComponent, InputLabel} from '../components/inputs';
 import Page from '../structure/page';
 import {Button} from '../components/button';
 
 
 const PasswordField = function(props) {
     return(
-        <InputField size={3} type="password" name={props.name} label={props.label} error={props.error} onChange={props.onChange} onBlur={props.onBlur}/>
+        <div>
+            <InputLabel htmlFor={props.id}>{props.label}</InputLabel>
+            <InputField {...props} type="password"/>
+        </div>
     );
 };
 
@@ -83,17 +88,15 @@ export default class Profile extends InputComponent {
 
     render() {
         return (
-            <Page>
-                <h2>User profile</h2>
-                <h3>Change password</h3>
-                <div className="row">
-                    <PasswordField name="currentPassword" label="Current password" error={this.state.errors.currentPassword} onChange={this.inputChange} onBlur={this.inputBlur}/>
-                    <PasswordField name="newPassword" label="New password" error={this.state.errors.newPassword} onChange={this.inputChange} onBlur={this.inputBlur}/>
-                    <PasswordField name="newPasswordAgain" label="New password, again" error={this.state.errors.newPasswordAgain} onChange={this.inputChange} onBlur={this.inputBlur}/>
-                    <div className="form-group"><Button size={2} type="primary" disabled={!this.canChangePassword()} onClick={this.changePassword}>Change</Button></div>
-                </div>
+            <Page heading="User profile">
+                <Box as="form" sx={{width: '700px'}} onSubmit={e => e.preventDefault()}>
+                    <PasswordField id="pw_current" name="currentPassword" label="Current password" error={this.state.errors.currentPassword} onChange={this.inputChange} onBlur={this.inputBlur}/>
+                    <PasswordField id="pw_new" name="newPassword" label="New password" error={this.state.errors.newPassword} onChange={this.inputChange} onBlur={this.inputBlur}/>
+                    <PasswordField id="pw_new2" name="newPasswordAgain" label="New password, again" error={this.state.errors.newPasswordAgain} onChange={this.inputChange} onBlur={this.inputBlur}/>
+                    <Button disabled={!this.canChangePassword()} onClick={this.changePassword}>Save</Button>
+                </Box>
                 {this.state.message &&
-                    <div className={`alert alert-${this.state.success ? 'success' : 'danger'} col-md-3`}>
+                    <div>
                         <strong>{this.state.message}</strong>
                     </div>
                 }

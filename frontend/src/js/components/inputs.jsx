@@ -1,29 +1,20 @@
 import React from 'react';
 
+import {Input as RebassInput, Label as RebassLabel, Select as RebassSelect} from '@rebass/forms';
 
 export const InputLabel = function(props) {
     return(
-        <label className="control-label">
-            {props.label}{props.required && <sup>*</sup>}
-        </label>
+        <RebassLabel {...props}>
+            {props.children}{props.required && <sup>*</sup>}
+        </RebassLabel>
     );
 };
 
 
 export const InputField = function(props) {
     return(
-        <div className={`form-group col-md-${props.size}`}>
-            <InputLabel label={props.label} required={props.required} />
-            <input
-                name={props.name}
-                type={props.type}
-                className={`form-control${props.error ? ' has-error' : ''}`}
-                placeholder={props.placeholder}
-                value={props.value}
-                onChange={props.onChange}
-                onBlur={props.onBlur}
-                ref={props.refCallback}
-            />
+        <div>
+            <RebassInput {...props} className={props.error ? ' has-error' : ''} ref={props.refCallback} />
             {props.error && <span className="validation-error">{props.error}</span>}
         </div>
     );
@@ -32,16 +23,10 @@ export const InputField = function(props) {
 
 export const SelectField = function(props) {
     return(
-        <div className={`form-group col-md-${props.size}`}>
-            <InputLabel label={props.label} required={props.required} />
-            <select
-                name={props.name}
-                className={`form-control${props.error ? ' has-error' : ''}`}
-                value={props.selectedValue}
-                onChange={props.onChange}
-                onBlur={props.onBlur}>
+        <div>
+            <RebassSelect {...props} className={props.error ? ' has-error' : ''} value={props.selectedValue}>
                 {props.children}
-            </select>
+            </RebassSelect>
             {props.error && <span className="validation-error">{props.error}</span>}
         </div>
     );
@@ -59,7 +44,7 @@ export const RadioButton = function(props) {
     return(
         <div className="radio">
             <input type="radio" name={props.name} id={props.id} value={props.value} checked={props.value === props.selectedValue} onChange={props.onChange} />
-            <label htmlFor={props.id}>{props.children}</label>
+            <RebassLabel htmlFor={props.id}>{props.children}</RebassLabel>
         </div>
     );
 };
@@ -69,7 +54,7 @@ export const Checkbox = function(props) {
     return(
         <div className="checkbox">
             <input type="checkbox" name={props.name} id={props.id} value={props.value} checked={props.value} onChange={props.onChange} />
-            <label htmlFor={props.id} className={props.textClass}>{props.children}</label>
+            <RebassLabel htmlFor={props.id} className={props.textClass}>{props.children}</RebassLabel>
         </div>
     );
 };
