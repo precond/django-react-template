@@ -75,7 +75,7 @@ export const Checkbox = function(props) {
 };
 
 
-export class InputPage extends React.Component {
+export class InputComponent extends React.Component {
     constructor(props) {
         super(props);
         this.inputChange = this.inputChange.bind(this);

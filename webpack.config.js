@@ -12,6 +12,7 @@ module.exports = {
     mode: 'production',
     entry: {
         main: ['@babel/polyfill', path.join(paths.JS, 'app-main.jsx')],
+        login: ['@babel/polyfill', path.join(paths.JS, 'app-login.jsx')],
     },
     output: {
         path: paths.DIST,

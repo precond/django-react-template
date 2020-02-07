@@ -35,7 +35,8 @@ cd static
 echo "[app]" > ../config/release.ini
 {
   echo css_common_file="$(ls css/common.*)"
-  echo app_template_file="$(ls js/app-template.*)"
+  echo app_main_file="$(ls js/app-main.*)"
+  echo app_login_file="$(ls js/app-login.*)"
 } >> ../config/release.ini
 
 # Create distribution site

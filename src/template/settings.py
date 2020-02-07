@@ -30,6 +30,7 @@ RESOURCES = {
     'css_common_file': config.get('app', 'css_common_file', fallback=None),
     'app_common_file': config.get('app', 'app_common_file', fallback=None),
     'app_main_file': config.get('app', 'app_main_file', fallback=None),
+    'app_login_file': config.get('app', 'app_login_file', fallback=None),
 }
 
 

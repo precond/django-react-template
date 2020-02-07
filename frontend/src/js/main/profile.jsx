@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {InputField, InputPage} from '../components/inputs';
+import {InputField, InputComponent} from '../components/inputs';
 import Page from '../structure/page';
 import {Button} from '../components/button';
 
@@ -12,7 +12,7 @@ const PasswordField = function(props) {
 };
 
 
-export default class Profile extends InputPage {
+export default class Profile extends InputComponent {
     constructor(props) {
         super(props);
         this.state = {
