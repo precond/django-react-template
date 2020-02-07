@@ -8,28 +8,31 @@ import thunk from 'redux-thunk';
 
 import {BrowserRouter as Router} from 'react-router-dom';
 
-import {coreApp, initialState} from './reducers';
+import {loginApp, initialState} from './login/reducers';
 
 import '../css/app';
+import { ThemeProvider } from 'theme-ui'
+import theme from './theme'
 
-import Main from './main';
+import LoginRoutes from './login/router';
 
 
 // Construct the store with combined initial state and preloaded state from backend
-const preloadedState = window.__INITIAL_STATE__;
-delete window.__INITIAL_STATE__;
+const preloadedState = JSON.parse(document.getElementById('initial-state').textContent);
 const store = createStore(
-    coreApp,
+    loginApp,
     Object.assign(initialState, preloadedState),
     applyMiddleware(thunk)
 );
 
 
 render(
-    <Provider store={store}>
-        <Router>
-            <Main/>
-        </Router>
-    </Provider>,
+    <ThemeProvider theme={theme}>
+        <Provider store={store}>
+            <Router>
+                <LoginRoutes/>
+            </Router>
+        </Provider>
+    </ThemeProvider>,
     document.getElementById('app')
 );

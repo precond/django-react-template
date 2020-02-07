@@ -1,13 +1,17 @@
 import React from 'react';
 
+import {Box, Heading} from "rebass";
+
 import Menu from './menu';
 
 
 export default function Header(props) {
     return (
-        <div id="header">
-            <h1>Template project</h1>
+        <Box>
+            <Heading sx={{fontSize: 6, my: 4}}>Template project</Heading>
+            {props.user &&
             <Menu user={props.user} />
-        </div>
+            }
+        </Box>
     );
 }

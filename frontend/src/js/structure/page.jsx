@@ -1,16 +1,20 @@
 import React from 'react';
 
-import Content from './content';
-import UserHeader from '../containers/userheader';
+import {Box, Heading} from 'rebass';
+
+import UserHeader from './userheader';
 
 
 export default function Page(props) {
     return (
-        <div>
+        <Box sx={{mx: 3}}>
             <UserHeader/>
-            <Content>
+            <Box>
+                {props.heading &&
+                <Heading sx={{fontSize: 3, mt: 3}}>{props.heading}</Heading>
+                }
                 {props.children}
-            </Content>
-        </div>
+            </Box>
+        </Box>
     );
 }

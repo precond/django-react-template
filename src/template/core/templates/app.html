@@ -1,9 +1,11 @@
 {% extends "base.html" %}
-{% load static from staticfiles %}
+{% load resource from core %}
 
-{% block script %}
-    <script type="application/javascript"}>
-        {% autoescape off %}window.__INITIAL_STATE__ = {{ state }};{% endautoescape %}
-    </script>
-    <script type="application/javascript" src="{% static 'js/app.bundle.js' %}"></script>
+{% block body %}
+    <div id="app"></div>
+
+    {% if initial_state is not None %}{{ initial_state|json_script:"initial-state" }}{% endif %}
+    <script type="application/javascript" src="{% resource 'app_common_file' %}"></script>
+    <script type="application/javascript" src="{% resource app_resource %}"></script>
+    {% block extra_scripts %}{% endblock %}
 {% endblock %}

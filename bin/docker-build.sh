@@ -30,5 +30,14 @@ mv src app
 mkdir files
 cp -a /source/build/static .
 
+# Rebuild release.ini from the versioned resource filenames
+cd static
+echo "[app]" > ../config/release.ini
+{
+  echo css_common_file="$(ls css/common.*)"
+  echo app_main_file="$(ls js/app-main.*)"
+  echo app_login_file="$(ls js/app-login.*)"
+} >> ../config/release.ini
+
 # Create distribution site
 tar zcf /source/dist/site.tgz /site

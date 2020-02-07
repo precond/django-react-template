@@ -1,8 +1,8 @@
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
-import Profile from '../pages/profile';
-import {getAPI} from '../api';
+import Profile from './profile';
+import {getAPI} from './api';
 
 
 const mapStateToProps = state => {
@@ -19,10 +19,10 @@ const mapDispatchToProps = dispatch => {
 };
 
 
-const StoreProfile = withRouter(connect(
+const ProfileContainer = withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
 )(Profile));
 
 
-export default StoreProfile;
+export default ProfileContainer;
