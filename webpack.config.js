@@ -20,7 +20,7 @@ module.exports = {
         publicPath: '/static/'
     },
     plugins: [
-        new MiniCssExtractPlugin({filename: 'css/common.[contenthash].bundle.css'}),
+        new MiniCssExtractPlugin({filename: 'css/[name].[contenthash].bundle.css'}),
         new webpack.ProvidePlugin({
             'jQuery': 'jquery',
             'window.jQuery': 'jquery',

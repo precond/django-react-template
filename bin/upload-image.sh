@@ -2,7 +2,7 @@
 
 source ./env/bin/activate
 
-`aws ecr get-login --no-include-email --region eu-west-1`
+`aws --profile precondecr ecr get-login --no-include-email --region eu-north-1`
 
-docker tag precond/template:latest 777825236826.dkr.ecr.eu-west-1.amazonaws.com/precond/template:latest \
-  && docker push 777825236826.dkr.ecr.eu-west-1.amazonaws.com/precond/template:latest
+docker tag precond/template:latest 771840211994.dkr.ecr.eu-north-1.amazonaws.com/precond/template:latest \
+  && docker push 771840211994.dkr.ecr.eu-north-1.amazonaws.com/precond/template:latest

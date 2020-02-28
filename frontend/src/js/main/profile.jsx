@@ -1,10 +1,14 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import {Box} from 'rebass';
 
+import {getAPI} from './api';
+
+import {Button} from '../components/button';
 import {InputField, InputComponent, InputLabel} from '../components/inputs';
 import Page from '../structure/page';
-import {Button} from '../components/button';
 
 
 const PasswordField = function(props) {
@@ -17,7 +21,7 @@ const PasswordField = function(props) {
 };
 
 
-export default class Profile extends InputComponent {
+class ProfileComponent extends InputComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -104,3 +108,26 @@ export default class Profile extends InputComponent {
         );
     }
 }
+
+
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    };
+};
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+        api: getAPI(dispatch)
+    };
+};
+
+
+const Profile = withRouter(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ProfileComponent));
+
+
+export default Profile;

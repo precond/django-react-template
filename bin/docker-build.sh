@@ -14,20 +14,19 @@ virtualenv --python=python3 /site/env
 source /site/env/bin/activate
 
 # Install dependencies
-cd /source
 pip install -r pip-requirements.txt
 pip install -r pip-docker-requirements.txt
 npm install
 
 # Generate static resources tree
 mkdir log  # Grunt task executes manage.py, which creates application.log
-grunt dist
+APPLICATION_ENVIRONMENT=build NODE_ENV=production grunt dist
 
 # Create distribution tree
 cd /site
 tar xf /source/build/repo.tar src config
 mv src app
-mkdir files
+mkdir files log
 cp -a /source/build/static .
 
 # Rebuild release.ini from the versioned resource filenames
@@ -35,6 +34,7 @@ cd static
 echo "[app]" > ../config/release.ini
 {
   echo css_common_file="$(ls css/common.*)"
+  echo app_common_file="$(ls js/app-common.*)"
   echo app_main_file="$(ls js/app-main.*)"
   echo app_login_file="$(ls js/app-login.*)"
 } >> ../config/release.ini

@@ -2,13 +2,13 @@ import React from 'react';
 
 import {Route, Switch} from 'react-router-dom';
 
-import LoginContainer from './login-container';
+import Login from './login';
 
 
 export default function LoginRoutes() {
     return (
         <Switch>
-            <Route exact path='/login/' render={() => <LoginContainer />}/>
+            <Route exact path='/login/' render={() => <Login />}/>
         </Switch>
     );
 }

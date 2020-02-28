@@ -1,6 +1,7 @@
 import React from 'react';
 
-import {Input as RebassInput, Label as RebassLabel, Select as RebassSelect} from '@rebass/forms';
+import {Input as RebassInput, Label as RebassLabel, Radio, Select as RebassSelect, Textarea} from '@rebass/forms';
+
 
 export const InputLabel = function(props) {
     return(
@@ -13,22 +14,32 @@ export const InputLabel = function(props) {
 
 export const InputField = function(props) {
     return(
-        <div>
+        <>
             <RebassInput {...props} className={props.error ? ' has-error' : ''} ref={props.refCallback} />
             {props.error && <span className="validation-error">{props.error}</span>}
-        </div>
+        </>
+    );
+};
+
+
+export const TextareaField = function(props) {
+    return(
+        <>
+            <Textarea {...props} className={props.error ? ' has-error' : ''} ref={props.refCallback} />
+            {props.error && <span className="validation-error">{props.error}</span>}
+        </>
     );
 };
 
 
 export const SelectField = function(props) {
     return(
-        <div>
+        <>
             <RebassSelect {...props} className={props.error ? ' has-error' : ''} value={props.selectedValue}>
                 {props.children}
             </RebassSelect>
             {props.error && <span className="validation-error">{props.error}</span>}
-        </div>
+        </>
     );
 };
 
@@ -42,10 +53,10 @@ export const Options = function(props) {
 
 export const RadioButton = function(props) {
     return(
-        <div className="radio">
-            <input type="radio" name={props.name} id={props.id} value={props.value} checked={props.value === props.selectedValue} onChange={props.onChange} />
-            <RebassLabel htmlFor={props.id}>{props.children}</RebassLabel>
-        </div>
+        <RebassLabel sx={props.sx}>
+            <Radio name={props.name} id={props.id} value={props.value} checked={props.value === props.selectedValue} onChange={props.onChange} />
+            {props.children}
+        </RebassLabel>
     );
 };
 

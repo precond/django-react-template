@@ -1,13 +1,17 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import {Box, Heading} from 'rebass';
+
+import {getAPI} from './api';
 
 import {InputComponent, InputField} from '../components/inputs';
 import {Button} from '../components/button';
 import Page from '../structure/page';
 
 
-export class Login extends InputComponent {
+class LoginComponent extends InputComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,8 +32,8 @@ export class Login extends InputComponent {
             <Page>
                 <Box as='form' sx={{mx: 'auto', width: '300px'}} onSubmit={e => e.preventDefault()}>
                     <Heading sx={{mt: 4, mb: 2}}>Log in</Heading>
-                    <InputField name="username" type="text" placeholder="Email address" onChange={this.inputChange} onBlur={this.inputBlur} />
-                    <InputField name="password" type="password" placeholder="Password" onChange={this.inputChange} onBlur={this.inputBlur} />
+                    <InputField variant="slab" name="username" type="text" placeholder="Email address" onChange={this.inputChange} onBlur={this.inputBlur} />
+                    <InputField variant="slab" name="password" type="password" placeholder="Password" onChange={this.inputChange} onBlur={this.inputBlur} />
                     {this.state.login_error &&
                     <Box sx={{color: 'highlight', fontSize: 2}}>Login failed</Box>
                     }
@@ -39,3 +43,26 @@ export class Login extends InputComponent {
         );
     }
 }
+
+
+const mapStateToProps = state => {
+    return {
+        next: state.next
+    };
+};
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+        api: getAPI(dispatch)
+    };
+};
+
+
+const Login = withRouter(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LoginComponent));
+
+
+export default Login;
